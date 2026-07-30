@@ -159,6 +159,12 @@ This opens at `http://localhost:8501`.
 
 ---
 
+# Live Demo
+
+You can try the deployed application here: [RAG Knowledge Assistant](https://adaptive-rag-11.streamlit.app/)
+
+ ---
+
 ## 💡 Future Improvements
 
 - Support for additional vector databases (Pinecone, Qdrant, LanceDB) as swappable providers
