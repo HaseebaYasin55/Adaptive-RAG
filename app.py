@@ -405,22 +405,6 @@ with tab_dashboard:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
- # RAW LOGS           
-            with st.expander(
-                "📋 View Raw Performance Logs"
-            ):
-
-                st.dataframe(
-                    logs,
-                    use_container_width=True,
-                    hide_index=True,
-                )
-
-    else:
-
-        st.info(
-            "Run a few queries to populate the dashboard."
-        )
 
 # QUERY HISTORY
 with tab_history:
