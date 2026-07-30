@@ -1,13 +1,5 @@
-"""
-LLM Response Generator
-------------------------
-Uses retrieved context chunks to generate a grounded answer via the
-Groq API.
-"""
 import time
-
 from langchain_groq import ChatGroq
-
 from config import GROQ_API_KEY, LLM_MODEL
 
 _llm = None
@@ -19,7 +11,6 @@ SYSTEM_PROMPT = (
     "Do not make up information that is not present in the context."
 )
 
-
 def get_llm():
     global _llm
     if _llm is None:
@@ -30,7 +21,6 @@ def get_llm():
 
 
 def generate_answer(query: str, retrieved_chunks: list):
-    """Generate an answer grounded in the retrieved chunks."""
     if retrieved_chunks:
         context = "\n\n".join(
             f"[Source: {c['source']}]\n{c['content']}" for c in retrieved_chunks

@@ -1,11 +1,5 @@
-"""
-Shared SQLite connection used by the Knowledge Base and Performance
-Monitor tools.
-"""
 import sqlite3
-
 from config import KB_DB_PATH
-
 
 def get_connection():
     conn = sqlite3.connect(KB_DB_PATH, check_same_thread=False)

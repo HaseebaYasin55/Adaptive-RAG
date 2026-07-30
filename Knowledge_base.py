@@ -1,15 +1,6 @@
-"""
-Knowledge Base
-----------------
-Stores past user queries and assistant responses for reference, and
-provides simple stats for the Streamlit UI.
-"""
 from datetime import datetime
-
 import pandas as pd
-
 from database import get_connection
-
 
 def save_qa(query: str, answer: str):
     conn = get_connection()
@@ -18,7 +9,6 @@ def save_qa(query: str, answer: str):
         (datetime.now().isoformat(timespec="seconds"), query, answer),
     )
     conn.commit()
-
 
 def get_history(limit: int = 50) -> pd.DataFrame:
     conn = get_connection()

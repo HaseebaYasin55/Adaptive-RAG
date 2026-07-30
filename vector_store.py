@@ -1,12 +1,5 @@
-"""
-Embedding & Indexing Tool
---------------------------
-Wraps ChromaDB + HuggingFace embeddings. Handles converting text to
-embeddings and storing/deleting/listing them in the vector store.
-"""
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
-
 from config import EMBEDDING_MODEL, CHROMA_PERSIST_DIR, COLLECTION_NAME
 
 _embeddings = None

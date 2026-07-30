@@ -32,9 +32,9 @@ html, body, [class*="css"]{
 }
 
 
-/* remove streamlit header */
+/* remove streamlit header, but keep the sidebar toggle working */
 
-header{
+#MainMenu{
     visibility:hidden;
 }
 
@@ -42,6 +42,16 @@ footer{
     visibility:hidden;
 }
 
+header{
+    background:transparent !important;
+    box-shadow:none !important;
+    border:none !important;
+}
+
+[data-testid="collapsedControl"]{
+    visibility:visible !important;
+    display:flex !important;
+}
 
 /* ============================================================
    SIDEBAR
@@ -449,6 +459,32 @@ a:hover{
     display:none;
 }
 
+.stTabs [data-baseweb="tab"]:focus{
+    box-shadow:none !important;
+    outline:none !important;
+}
+
+.stTabs [data-baseweb="tab"]:focus-visible{
+    box-shadow:none !important;
+    outline:none !important;
+}
+
+/* ============================================================
+   ACTIVE DOCUMENTS BOX
+============================================================ */
+
+.st-key-active_docs_box{
+    background:#10282d;
+    border:2px dashed #22D3C5;
+    border-radius:20px;
+    padding:18px;
+    transition:.35s;
+}
+
+.st-key-active_docs_box:hover{
+    border-color:#65fff3;
+    box-shadow:0 0 18px rgba(34,211,197,.35);
+}
 
 /* ============================================================
    DATAFRAME

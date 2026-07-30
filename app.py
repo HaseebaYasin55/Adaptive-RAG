@@ -1,8 +1,3 @@
-"""
-RAG Assistant
-Modern UI Version
-"""
-
 import pandas as pd
 import streamlit as st
 
@@ -41,10 +36,7 @@ from UI.ui_components import (
     empty_documents,
 )
 
-#######################################################
 # PAGE CONFIG
-#######################################################
-
 st.set_page_config(
     page_title="RAG Assistant",
     page_icon="📚",
@@ -52,16 +44,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-#######################################################
-# LOAD CSS
-#######################################################
 
 load_css()
 
-#######################################################
-# HEADER
-#######################################################
-
+#header
 page_header()
 
 st.caption(
@@ -70,10 +56,8 @@ st.caption(
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-#######################################################
-# SIDEBAR
-#######################################################
 
+#sidebar
 with st.sidebar:
 
     sidebar_header()
@@ -104,45 +88,29 @@ with st.sidebar:
                     )
 
     st.markdown("---")
-
     st.markdown("### 📂 Active Documents")
 
-    docs = active_documents()
-
-    if docs:
-
-        for name, chunks in docs.items():
-
+    with st.container(key="active_docs_box"):
+        docs = active_documents()
+        if docs:
+          for name, chunks in docs.items():
             c1, c2 = st.columns([5,1])
-
             with c1:
-
                 document_card(name, chunks)
-
             with c2:
-
                 st.write("")
-
                 st.write("")
-
                 if st.button(
                     "🗑️",
                     key=f"delete_{name}",
                     use_container_width=True,
                 ):
-
                     delete_file(name)
-
                     st.rerun()
+        else:
+           empty_documents()
 
-    else:
-
-        empty_documents()
-
-#######################################################
-# MAIN TABS
-#######################################################
-
+#main tabs
 tab_chat, tab_docs, tab_dashboard, tab_history = st.tabs(
 
     [
@@ -159,10 +127,8 @@ tab_chat, tab_docs, tab_dashboard, tab_history = st.tabs(
 
 )
 
-#######################################################
-# CHAT TAB
-#######################################################
 
+#chat tab
 with tab_chat:
 
     section_title(
@@ -217,10 +183,7 @@ with tab_chat:
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        ###################################################
-        # METRICS
-        ###################################################
-
+ # METRICS
         c1, c2, c3, c4 = st.columns(4)
 
         with c1:
@@ -253,37 +216,8 @@ with tab_chat:
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        ###################################################
-        # RETRIEVED CHUNKS
-        ###################################################
-
-        with st.expander(
-            "📑 Retrieved Context Used"
-        ):
-
-            for chunk in chunks:
-
-                st.markdown(
-                    f"""
-**📄 Source:** `{chunk['source']}`
-
-**Chunk:** {chunk['chunk_id']}
-
-**Similarity Score:** {chunk['score']:.3f}
-"""
-                )
-
-                st.code(
-                    chunk["content"][:700],
-                    language="text"
-                )
-
-                st.divider()
-
-#######################################################
+       
 # DOCUMENTS TAB
-#######################################################
-
 with tab_docs:
 
     section_title(
@@ -352,10 +286,7 @@ with tab_docs:
         empty_documents()
 
 
-#######################################################
 # PERFORMANCE DASHBOARD
-#######################################################
-
 with tab_dashboard:
 
     section_title(
@@ -407,9 +338,8 @@ with tab_dashboard:
 
             logs = logs.sort_values("id")
 
-            ###################################################
-            # LATENCY CHART
-            ###################################################
+          
+# LATENCY CHART
 
             st.markdown("### ⚡ Latency Analysis")
 
@@ -428,9 +358,7 @@ with tab_dashboard:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            ###################################################
-            # RETRIEVAL SCORE
-            ###################################################
+# RETRIEVAL SCORE
 
             st.markdown("### 🎯 Retrieval Quality")
 
@@ -448,10 +376,9 @@ with tab_dashboard:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            ###################################################
-            # KNOWLEDGE BASE IMPACT
-            ###################################################
-
+           
+# KNOWLEDGE BASE IMPACT
+            
             st.markdown(
                 "### 📈 Knowledge Base Growth Impact"
             )
@@ -478,10 +405,7 @@ with tab_dashboard:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            ###################################################
-            # RAW LOGS
-            ###################################################
-
+ # RAW LOGS           
             with st.expander(
                 "📋 View Raw Performance Logs"
             ):
@@ -498,10 +422,7 @@ with tab_dashboard:
             "Run a few queries to populate the dashboard."
         )
 
-#######################################################
 # QUERY HISTORY
-#######################################################
-
 with tab_history:
 
     section_title(
@@ -531,10 +452,7 @@ with tab_history:
             "No conversations found yet."
         )
 
-#######################################################
 # FOOTER
-#######################################################
-
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 st.markdown(

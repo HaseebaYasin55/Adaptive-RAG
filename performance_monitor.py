@@ -1,26 +1,10 @@
-"""
-Performance Monitor Tool
----------------------------
-Logs retrieval quality, latency (embedding + retrieval + generation),
-and a lightweight faithfulness score for every query. Also provides
-aggregated data for the Streamlit performance dashboard, including
-before/after comparisons as the knowledge base changes size.
-"""
 import re
 from datetime import datetime
-
 import pandas as pd
 
 from database import get_connection
 
-
 def _faithfulness_score(answer: str, retrieved_chunks: list) -> float:
-    """
-    Lightweight lexical-overlap heuristic: the fraction of meaningful
-    words in the answer that also appear in the retrieved context.
-    Closer to 1.0 = well grounded in the retrieved context.
-    Closer to 0.0 = more likely to contain hallucinated content.
-    """
     context_text = " ".join(c["content"] for c in retrieved_chunks).lower()
     context_words = set(re.findall(r"[a-z0-9]+", context_text))
 
@@ -40,7 +24,6 @@ def _faithfulness_score(answer: str, retrieved_chunks: list) -> float:
 
 
 def log_query(query, answer, retrieved_chunks, retrieval_time, generation_time, active_doc_count):
-    """Record retrieval + generation metrics for one query."""
     avg_score = (
         sum(c["score"] for c in retrieved_chunks) / len(retrieved_chunks)
         if retrieved_chunks else 0.0
